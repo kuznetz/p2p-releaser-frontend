@@ -1,32 +1,23 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<div style="height: 100vh; display: flex; flex-direction: column;">
+
+  <ul class="nav nav-pills" style="padding: 5px; background: #ddd">
+    <li class="nav-item">
+      <router-link class="nav-link" active-class="active" to="/">releases</router-link>
+    </li>
+    <li class="nav-item">
+      <router-link class="nav-link" active-class="active" to="/peers">peers</router-link>
+    </li>
+  </ul>
+
+  <div style="flex: 1; display: flex"><router-view/></div>
+
+</div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+<style lang="sass">
+  @import "node_modules/bootstrap/scss/bootstrap";
+  @import "node_modules/inspire-tree-dom/dist/inspire-tree-light";
+</style>
+<style>
 </style>
