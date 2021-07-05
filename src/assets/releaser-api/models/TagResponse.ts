@@ -16,46 +16,46 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface IRelease
+ * @interface TagResponse
  */
-export interface IRelease {
+export interface TagResponse {
     /**
      * 
      * @type {string}
-     * @memberof IRelease
+     * @memberof TagResponse
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
+     */
+    parentId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TagResponse
      */
     name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof IRelease
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof IRelease
-     */
-    tags?: Array<string>;
 }
 
-export function IReleaseFromJSON(json: any): IRelease {
-    return IReleaseFromJSONTyped(json, false);
+export function TagResponseFromJSON(json: any): TagResponse {
+    return TagResponseFromJSONTyped(json, false);
 }
 
-export function IReleaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): IRelease {
+export function TagResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): TagResponse {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
+        'id': json['id'],
+        'parentId': !exists(json, 'parentId') ? undefined : json['parentId'],
         'name': json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'tags': !exists(json, 'tags') ? undefined : json['tags'],
     };
 }
 
-export function IReleaseToJSON(value?: IRelease | null): any {
+export function TagResponseToJSON(value?: TagResponse | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,9 +64,9 @@ export function IReleaseToJSON(value?: IRelease | null): any {
     }
     return {
         
+        'id': value.id,
+        'parentId': value.parentId,
         'name': value.name,
-        'description': value.description,
-        'tags': value.tags,
     };
 }
 

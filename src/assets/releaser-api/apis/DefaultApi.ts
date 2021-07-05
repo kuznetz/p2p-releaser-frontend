@@ -18,6 +18,12 @@ import {
     IRelease,
     IReleaseFromJSON,
     IReleaseToJSON,
+    IReleaseFull,
+    IReleaseFullFromJSON,
+    IReleaseFullToJSON,
+    TagResponse,
+    TagResponseFromJSON,
+    TagResponseToJSON,
 } from '../models';
 
 export interface InnerReleasesControllerCreateRequest {
@@ -41,7 +47,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Создать новый блок из json
      */
-    async innerReleasesControllerCreateRaw(requestParameters: InnerReleasesControllerCreateRequest): Promise<runtime.ApiResponse<void>> {
+    async innerReleasesControllerCreateRaw(requestParameters: InnerReleasesControllerCreateRequest): Promise<runtime.ApiResponse<string>> {
         if (requestParameters.iRelease === null || requestParameters.iRelease === undefined) {
             throw new runtime.RequiredError('iRelease','Required parameter requestParameters.iRelease was null or undefined when calling innerReleasesControllerCreate.');
         }
@@ -60,20 +66,21 @@ export class DefaultApi extends runtime.BaseAPI {
             body: IReleaseToJSON(requestParameters.iRelease),
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.TextApiResponse(response) as any;
     }
 
     /**
      * Создать новый блок из json
      */
-    async innerReleasesControllerCreate(requestParameters: InnerReleasesControllerCreateRequest): Promise<void> {
-        await this.innerReleasesControllerCreateRaw(requestParameters);
+    async innerReleasesControllerCreate(requestParameters: InnerReleasesControllerCreateRequest): Promise<string> {
+        const response = await this.innerReleasesControllerCreateRaw(requestParameters);
+        return await response.value();
     }
 
     /**
      * Получить инфоблок в виде json по id
      */
-    async innerReleasesControllerGetByIdRaw(requestParameters: InnerReleasesControllerGetByIdRequest): Promise<runtime.ApiResponse<void>> {
+    async innerReleasesControllerGetByIdRaw(requestParameters: InnerReleasesControllerGetByIdRequest): Promise<runtime.ApiResponse<IReleaseFull>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling innerReleasesControllerGetById.');
         }
@@ -89,20 +96,21 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => IReleaseFullFromJSON(jsonValue));
     }
 
     /**
      * Получить инфоблок в виде json по id
      */
-    async innerReleasesControllerGetById(requestParameters: InnerReleasesControllerGetByIdRequest): Promise<void> {
-        await this.innerReleasesControllerGetByIdRaw(requestParameters);
+    async innerReleasesControllerGetById(requestParameters: InnerReleasesControllerGetByIdRequest): Promise<IReleaseFull> {
+        const response = await this.innerReleasesControllerGetByIdRaw(requestParameters);
+        return await response.value();
     }
 
     /**
      * Получить теги релизов
      */
-    async innerReleasesControllerGetTagsRaw(): Promise<runtime.ApiResponse<void>> {
+    async innerReleasesControllerGetTagsRaw(): Promise<runtime.ApiResponse<Array<TagResponse>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -114,20 +122,21 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TagResponseFromJSON));
     }
 
     /**
      * Получить теги релизов
      */
-    async innerReleasesControllerGetTags(): Promise<void> {
-        await this.innerReleasesControllerGetTagsRaw();
+    async innerReleasesControllerGetTags(): Promise<Array<TagResponse>> {
+        const response = await this.innerReleasesControllerGetTagsRaw();
+        return await response.value();
     }
 
     /**
      * Получить список id по параметрам
      */
-    async innerReleasesControllerListRaw(requestParameters: InnerReleasesControllerListRequest): Promise<runtime.ApiResponse<void>> {
+    async innerReleasesControllerListRaw(requestParameters: InnerReleasesControllerListRequest): Promise<runtime.ApiResponse<Array<string>>> {
         const queryParameters: any = {};
 
         if (requestParameters.authorId !== undefined) {
@@ -147,14 +156,15 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * Получить список id по параметрам
      */
-    async innerReleasesControllerList(requestParameters: InnerReleasesControllerListRequest): Promise<void> {
-        await this.innerReleasesControllerListRaw(requestParameters);
+    async innerReleasesControllerList(requestParameters: InnerReleasesControllerListRequest): Promise<Array<string>> {
+        const response = await this.innerReleasesControllerListRaw(requestParameters);
+        return await response.value();
     }
 
 }

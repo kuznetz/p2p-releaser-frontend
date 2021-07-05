@@ -3,10 +3,10 @@
 
   <ul class="nav nav-pills" style="padding: 5px; background: #ddd">
     <li class="nav-item">
-      <router-link class="nav-link" active-class="active" to="/">releases</router-link>
+      <router-link class="nav-link" exact-active-class="active" to="/">releases</router-link>
     </li>
     <li class="nav-item">
-      <router-link class="nav-link" active-class="active" to="/peers">peers</router-link>
+      <router-link class="nav-link" exact-active-class="active" to="/peers">peers</router-link>
     </li>
   </ul>
 

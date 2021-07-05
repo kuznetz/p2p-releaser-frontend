@@ -16,46 +16,60 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface IRelease
+ * @interface IReleaseFull
  */
-export interface IRelease {
+export interface IReleaseFull {
     /**
      * 
      * @type {string}
-     * @memberof IRelease
+     * @memberof IReleaseFull
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IReleaseFull
+     */
+    authorId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IReleaseFull
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof IRelease
+     * @memberof IReleaseFull
      */
     description?: string;
     /**
      * 
      * @type {Array<string>}
-     * @memberof IRelease
+     * @memberof IReleaseFull
      */
     tags?: Array<string>;
 }
 
-export function IReleaseFromJSON(json: any): IRelease {
-    return IReleaseFromJSONTyped(json, false);
+export function IReleaseFullFromJSON(json: any): IReleaseFull {
+    return IReleaseFullFromJSONTyped(json, false);
 }
 
-export function IReleaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): IRelease {
+export function IReleaseFullFromJSONTyped(json: any, ignoreDiscriminator: boolean): IReleaseFull {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
+        'id': json['id'],
+        'authorId': json['authorId'],
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
     };
 }
 
-export function IReleaseToJSON(value?: IRelease | null): any {
+export function IReleaseFullToJSON(value?: IReleaseFull | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,6 +78,8 @@ export function IReleaseToJSON(value?: IRelease | null): any {
     }
     return {
         
+        'id': value.id,
+        'authorId': value.authorId,
         'name': value.name,
         'description': value.description,
         'tags': value.tags,
